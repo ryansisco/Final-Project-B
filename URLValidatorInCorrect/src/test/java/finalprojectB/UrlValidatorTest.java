@@ -21,7 +21,7 @@ public class UrlValidatorTest {
    // }
 //
    @Test(timeout = 4000)
-   public void Test01() throws Throwable//Tests known websites 
+   public void Manual_Test01() throws Throwable//Tests known websites 
    {   
       UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
       UrlValidator urlVal2 = new UrlValidator(); //should cause false returns on isValid
@@ -41,7 +41,7 @@ public class UrlValidatorTest {
    }
 
    @Test(timeout = 4000)
-   public void Test02() throws Throwable//Tests known websites
+   public void Manual_Test02() throws Throwable//Tests known websites
    {     
       UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
       UrlValidator urlVal2 = new UrlValidator(); //should cause false returns on isValid
@@ -52,13 +52,10 @@ public class UrlValidatorTest {
       assertFalse(urlVal2.isValid("http://www.google.com"));
       assertFalse(urlVal2.isValid("http://www.amazon.com"));
       assertFalse(urlVal2.isValid("http://www.ebay.com"));
-      // UrlValidator urlVal = new UrlValidator();
-      // assertEquals(null, urlVal.isValid());
-
    }
 
    @Test(timeout = 4000)
-   public void Test03() throws Throwable//Tests known websites
+   public void Test03() throws Throwable
    {   
       // UrlValidator urlVal = new UrlValidator();
       // assertEquals(null, urlVal.isValid());
@@ -67,14 +64,14 @@ public class UrlValidatorTest {
    
 //
    @Test(timeout = 4000)
-   public void Test04() throws Throwable//Tests known websites
+   public void Test04() throws Throwable
    {
 	 //You can use this function to implement your First Partition testing	   
 
    }
    
    @Test(timeout = 4000)
-   public void Test05() throws Throwable//Tests known websites
+   public void Test05() throws Throwable
 	{	
     //You can use this function to implement your Second Partition testing	   
 
@@ -82,7 +79,7 @@ public class UrlValidatorTest {
    //You need to create more test cases for your Partitions if you need to 
    
    @Test(timeout = 4000)
-   public void Test06() throws Throwable//Tests known websites
+   public void Test06() throws Throwable
    {
 	   //You can use this function for programming based testing
 
