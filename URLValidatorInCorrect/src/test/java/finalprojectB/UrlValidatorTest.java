@@ -15,60 +15,101 @@ import java.util.Random;
 
 public class UrlValidatorTest {
 
-	@Test(timeout = 4000)
-	public void Manual_Test01() throws Throwable//Tests known websites 
+	@Test
+	public void Test01_Manual_Testing() throws Throwable//Tests known websites 
 	{  
+		System.out.print("\nTesting websites known to exist\n");
 		UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
 		UrlValidator urlVal2 = new UrlValidator();
 		assertTrue(urlVal.isValid("http://www.youtube.com"));
 		assertTrue(urlVal.isValid("http://www.reddit.com:65535"));
 		assertTrue(urlVal.isValid("ftp://www.spotify.com"));
 		assertTrue(urlVal.isValid("http://www.google.com/$23"));
-		assertTrue(urlVal.isValid("http://www.amazon.com?action=view"));
-		assertFalse(urlVal.isValid("10.10.10.10"));
+		assertTrue(urlVal.isValid("https://www.amazon.com?action=view"));
 		assertTrue(urlVal2.isValid("http://www.youtube.com"));
 		assertTrue(urlVal2.isValid("http://www.reddit.com"));
 		assertTrue(urlVal2.isValid("http://www.spotify.com"));
-		assertTrue(urlVal2.isValid("http://www.google.com"));
+		assertTrue(urlVal2.isValid("https://www.google.com"));
+		assertTrue(urlVal2.isValid("http://www.amazon.com"));
+		assertTrue(urlVal2.isValid("http://www.ebay.com"));
 		assertTrue(urlVal2.isValid("http://www.amazon.com"));
 		assertTrue(urlVal2.isValid("http://www.ebay.com"));
 	}
 
-	@Test(timeout = 4000)
-	public void Manual_Test02() throws Throwable//Tests known websites
+	@Test
+	public void Test02_Manual_Testing() throws Throwable//Tests websites that don't exist
 	{     
+		System.out.print("\nTesting websites known to NOT exist\n");
 		UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
 		UrlValidator urlVal2 = new UrlValidator();
 		assertFalse(urlVal.isValid("345453eb3ay1236456456452"));
 		assertFalse(urlVal.isValid("://h.youtube1321354313123.com"));
 		assertFalse(urlVal.isValid("6.6.6.6.6.6.6"));
+		assertFalse(urlVal.isValid("10.10.10.10"));
 		assertFalse(urlVal2.isValid("http://.spotify56456."));
 		assertFalse(urlVal.isValid("http://www.google.com/..//file"));
-		assertTrue(urlVal2.isValid("http://www.amazon.com"));
-		assertTrue(urlVal2.isValid("http://www.ebay.com"));
 	}
 
 //
-	@Test(timeout = 4000)
-	public void Test04() throws Throwable
-	{
-	 //You can use this function to implement your First Partition testing	   
-
-	}
-
-	@Test(timeout = 4000)
-	public void Test05() throws Throwable
-	{	
-	//You can use this function to implement your Second Partition testing	   
-
+	@Test
+	public void Test03_Partition_Test() throws Throwable
+	{	   
+		System.out.print("\nTesting string with improper protocol\n");
+		UrlValidator urlVal = new UrlValidator();
+		String precomp = "://www.google.com";
+		Random rand = new Random();
+		for (int i = 0; i < 100000; i++) {
+			String protocol = "";
+			int pass = 0;
+			for (int j = 0; j < (rand.nextInt(8) + 1); j++) {
+				char randchar = (char)(rand.nextInt(97) + 1);
+				protocol = protocol.concat(String.valueOf(randchar));
+			}
+			if ((protocol.equals("http")) || (protocol.equals("ftp"))
+				|| (protocol.equals("h3t")) || (protocol.equals("https"))){
+				pass = 1;
+			}
+			protocol = protocol.concat(precomp);
+			if (pass == 1)
+				assertTrue(urlVal.isValid(protocol));
+			else
+				assertFalse(urlVal.isValid(protocol));  
+		}
 	}
 
 	@Test
-	public void Test06() throws Throwable
-	{
+	public void Test04_Partition_Test() throws Throwable
+	{	   
+		System.out.print("\nTesting string with improper top-level domain\n");
 		UrlValidator urlVal = new UrlValidator();
 		Random rand = new Random();
 		for (int i = 0; i < 100000; i++) {
+			String protocol = "";
+			String precomp = "http://www.google.";
+			int pass = 0;
+			for (int j = 0; j < (rand.nextInt(3) + 3); j++) {
+				char randchar = (char)(rand.nextInt(97) + 1);
+				protocol = protocol.concat(String.valueOf(randchar));
+			}
+			if ((protocol.equals("com")) || (protocol.equals("org"))
+				|| protocol.equals("net")) {
+				pass = 1;
+			}
+			precomp = precomp.concat(protocol);
+			if (pass == 1)
+				assertTrue(urlVal.isValid(protocol));
+			else
+				assertFalse(urlVal.isValid(protocol));  
+		}
+	}
+
+	@Test
+	public void Test05_Programming_Test() throws Throwable
+	{
+		System.out.print("\nTesting random combination of web URLs\n");
+		UrlValidator urlVal = new UrlValidator();
+		Random rand = new Random();
+		for (int i = 0; i < 300000; i++) {
 
 			String test = "";
 			int pass;
