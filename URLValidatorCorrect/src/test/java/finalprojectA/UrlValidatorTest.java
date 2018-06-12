@@ -1,5 +1,5 @@
 
-package finalprojectB;
+package finalprojectA;
 
 import junit.framework.TestCase;
 import org.junit.Test;
