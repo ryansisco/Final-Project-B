@@ -3,6 +3,7 @@ package finalprojectB;
 
 import junit.framework.TestCase;
 import org.junit.Test;
+import java.util.Random;
 import static org.junit.Assert.*;
 //You can use this as a skeleton for your 3 different test approach
 //It is an optional to use this file, you can generate your own test file(s) to test the target function!
@@ -22,44 +23,35 @@ public class UrlValidatorTest {
 //
    @Test(timeout = 4000)
    public void Manual_Test01() throws Throwable//Tests known websites 
-   {   
-      UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-      UrlValidator urlVal2 = new UrlValidator(); //should cause false returns on isValid
-      assertTrue(urlVal.isValid("http://www.youtube.com"));
-      assertTrue(urlVal.isValid("http://www.reddit.com"));
-      assertTrue(urlVal.isValid("http://www.spotify.com"));
-      assertTrue(urlVal.isValid("http://www.google.com"));
-      assertTrue(urlVal.isValid("http://www.amazon.com"));
-      assertTrue(urlVal.isValid("http://www.ebay.com"));
-      assertTrue(urlVal2.isValid("http://www.youtube.com"));
-      assertTrue(urlVal2.isValid("http://www.reddit.com"));
-      assertTrue(urlVal2.isValid("http://www.spotify.com"));
-      assertTrue(urlVal2.isValid("http://www.google.com"));
-      assertTrue(urlVal2.isValid("http://www.amazon.com"));
-      assertTrue(urlVal2.isValid("http://www.ebay.com"));
-     
+   {
+		// UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+		 UrlValidator urlVal2 = new UrlValidator();
+		 // assertTrue(urlVal.isValid("http://www.youtube.com"));
+		 // assertTrue(urlVal.isValid("http://www.reddit.com"));
+		 // assertTrue(urlVal.isValid("http://www.spotify.com"));
+		 // assertTrue(urlVal.isValid("http://www.google.com"));
+		 // assertTrue(urlVal.isValid("http://www.amazon.com"));
+		 // assertTrue(urlVal.isValid("http://www.ebay.com"));
+		 assertTrue(urlVal2.isValid("http://www.youtube.com"));
+		 assertTrue(urlVal2.isValid("http://www.reddit.com"));
+		 assertTrue(urlVal2.isValid("http://www.spotify.com"));
+		 assertTrue(urlVal2.isValid("http://www.google.com"));
+		 assertTrue(urlVal2.isValid("http://www.amazon.com"));
+		 assertTrue(urlVal2.isValid("http://www.ebay.com"));
    }
 
    @Test(timeout = 4000)
    public void Manual_Test02() throws Throwable//Tests known websites
-   {     
-      UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-      UrlValidator urlVal2 = new UrlValidator(); //should cause false returns on isValid
-      assertFalse(urlVal.isValid("http://www.342345453eb3ay1236456456452"));
-      assertFalse(urlVal.isValid("http://www.youtube1321354313123.com"));
-      assertFalse(urlVal.isValid("http://www.reddit12312312324.com"));
-      assertFalse(urlVal2.isValid("http://www.spotify56456.com"));
-      assertFalse(urlVal2.isValid("http://www.google.com"));
-      assertFalse(urlVal2.isValid("http://www.amazon.com"));
-      assertFalse(urlVal2.isValid("http://www.ebay.com"));
-   }
-
-   @Test(timeout = 4000)
-   public void Test03() throws Throwable
-   {   
-      // UrlValidator urlVal = new UrlValidator();
-      // assertEquals(null, urlVal.isValid());
-
+   {    
+		 UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+		 UrlValidator urlVal2 = new UrlValidator(); //should cause false returns on isValid
+		 assertFalse(urlVal.isValid("http://www.342345453eb3ay1236456456452"));
+		 assertFalse(urlVal.isValid("http://www.youtube1321354313123.com"));
+		 assertFalse(urlVal.isValid("http://www.reddit12312312324.com"));
+		 assertFalse(urlVal2.isValid("http://www.spotify56456.com"));
+		 assertFalse(urlVal2.isValid("http://www.google.com"));
+		 assertFalse(urlVal2.isValid("http://www.amazon.com"));
+		 assertFalse(urlVal2.isValid("http://www.ebay.com"));
    }
    
 //
@@ -73,18 +65,93 @@ public class UrlValidatorTest {
    @Test(timeout = 4000)
    public void Test05() throws Throwable
 	{	
-    //You can use this function to implement your Second Partition testing	   
+	//You can use this function to implement your Second Partition testing	   
 
    }
    //You need to create more test cases for your Partitions if you need to 
    
-   @Test(timeout = 4000)
+   @Test
    public void Test06() throws Throwable
    {
-	   //You can use this function for programming based testing
+	  UrlValidator urlVal = new UrlValidator();
 
+	  Random rand = new Random();
+	   for (int i = 0; i < 100000; i++) {
+
+		 String test = "";
+		 int pass;
+		 int randy = rand.nextInt(4) + 1;
+		 pass = 1;
+		 if ((randy == 1) || (randy == 2)) {
+			test = "http://";
+		 }
+		 if (randy == 3) {
+			test = "ftp://";
+			pass = 0;
+		 }
+		 if (randy == 4) {
+			test = "FAIL";
+			pass = 0;
+		 }
+		 randy = rand.nextInt(10) + 1;
+		 if (randy < 8) {  //valid
+			if (randy == 1) {
+			   if (test.length() > 0)
+				  test = test.concat("www.google.com");
+			   else
+				  test = "www.google.com";
+			}
+			if (randy == 2) {
+			   if (test.length() > 0)
+				  test = test.concat("www.youtube.com");
+			   else
+				  test = "www.youtube.com";
+
+			}
+			if (randy == 3) {
+			   if (test.length() > 0)
+				  test = test.concat("www.bing.com");
+			   else
+				  test = "www.bing.com";
+			}
+			if (randy == 4) {
+			   if (test.length() > 0)
+				  test = test.concat("www.yahoo.com");
+			   else
+				  test = "www.yahoo.com";
+			}
+			if (randy == 5) {
+			   if (test.length() > 0)
+				  test = test.concat("www.gmail.com");
+			   else
+				  test = "www.gmail.com";
+			}
+			if (randy == 6) {
+			   if (test.length() > 0)
+				  test = test.concat("www.github.com");
+			   else
+				  test = "www.github.com";
+			}
+			if (randy == 7) {
+			   if (test.length() > 0) {
+				  test = test.concat("www.facebook.com");
+			   }
+			   else
+				  test = "www.facebook.com";
+			}
+		 } 
+		 else {   //invalid
+			pass = 0;
+			for (int j = 0; j < randy*2; j++) {
+			   test = test.concat(Integer.toString(rand.nextInt(79) + 47));
+			}
+		 }
+		 if (pass == 1) {
+			assertTrue(urlVal.isValid(test));
+		 }
+		 if (pass == 0) {
+			assertFalse(urlVal.isValid(test));
+		 }
+	  }
    }
-   
-
-
 }
