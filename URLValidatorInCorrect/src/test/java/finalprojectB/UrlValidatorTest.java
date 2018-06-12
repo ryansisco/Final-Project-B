@@ -3,8 +3,8 @@ package finalprojectB;
 
 import junit.framework.TestCase;
 import org.junit.Test;
-import java.util.Random;
 import static org.junit.Assert.*;
+import java.util.Random;
 //You can use this as a skeleton for your 3 different test approach
 //It is an optional to use this file, you can generate your own test file(s) to test the target function!
 // Again, it is up to you to use this file or not!
@@ -25,19 +25,19 @@ public class UrlValidatorTest {
 	public void Manual_Test01() throws Throwable//Tests known websites 
 	{  
 		UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-		UrlValidator urlVal2 = new UrlValidator(); //should cause false returns on isValid
+		//UrlValidator urlVal2 = new UrlValidator(); //should cause false returns on isValid
 		assertTrue(urlVal.isValid("http://www.youtube.com"));
-		assertTrue(urlVal.isValid("http://www.reddit.com:65535"));
-		assertTrue(urlVal.isValid("ftp://www.spotify.com"));
-		assertTrue(urlVal.isValid("http://www.google.com/$23"));
-		assertTrue(urlVal.isValid("http://www.amazon.com?action=view"));
-		assertTrue(urlVal.isValid("10.10.10.10"));
-		assertFalse(urlVal2.isValid("http://www.youtube.com"));
-		assertFalse(urlVal2.isValid("http://www.reddit.com"));
-		assertFalse(urlVal2.isValid("http://www.spotify.com"));
-		assertFalse(urlVal2.isValid("http://www.google.com"));
-		assertFalse(urlVal2.isValid("http://www.amazon.com"));
-		assertFalse(urlVal2.isValid("http://www.ebay.com"));
+		// assertTrue(urlVal.isValid("http://www.reddit.com:65535"));
+		// assertTrue(urlVal.isValid("ftp://www.spotify.com"));
+		// assertTrue(urlVal.isValid("http://www.google.com/$23"));
+		// assertTrue(urlVal.isValid("http://www.amazon.com?action=view"));
+		// assertTrue(urlVal.isValid("10.10.10.10"));
+		// assertFalse(urlVal2.isValid("http://www.youtube.com"));
+		// assertFalse(urlVal2.isValid("http://www.reddit.com"));
+		// assertFalse(urlVal2.isValid("http://www.spotify.com"));
+		// assertFalse(urlVal2.isValid("http://www.google.com"));
+		// assertFalse(urlVal2.isValid("http://www.amazon.com"));
+		// assertFalse(urlVal2.isValid("http://www.ebay.com"));
 	}
 
 	@Test(timeout = 4000)
@@ -45,13 +45,13 @@ public class UrlValidatorTest {
 	{     
 		UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
 		UrlValidator urlVal2 = new UrlValidator(); //should cause false returns on isValid
-		assertFalse(urlVal.isValid("345453eb3ay1236456456452"));
-		assertFalse(urlVal.isValid("://h.youtube1321354313123.com"));
-		assertFalse(urlVal.isValid("6.6.6.6.6.6.6"));
-		assertFalse(urlVal2.isValid("http://.spotify56456."));
-		assertFalse(urlVal.isValid("http://www.google.com/..//file"));
-		assertFalse(urlVal2.isValid("http://www.amazon.com"));
-		assertFalse(urlVal2.isValid("http://www.ebay.com"));
+		// assertFalse(urlVal.isValid("345453eb3ay1236456456452"));
+		// assertFalse(urlVal.isValid("://h.youtube1321354313123.com"));
+		// assertFalse(urlVal.isValid("6.6.6.6.6.6.6"));
+		// assertFalse(urlVal2.isValid("http://.spotify56456."));
+		// assertFalse(urlVal.isValid("http://www.google.com/..//file"));
+		// assertFalse(urlVal2.isValid("http://www.amazon.com"));
+		// assertFalse(urlVal2.isValid("http://www.ebay.com"));
 	}
 
 //
@@ -74,7 +74,6 @@ public class UrlValidatorTest {
 	public void Test06() throws Throwable
 	{
 		UrlValidator urlVal = new UrlValidator();
-
 		Random rand = new Random();
 		for (int i = 0; i < 100000; i++) {
 
@@ -106,7 +105,6 @@ public class UrlValidatorTest {
 						test = test.concat("www.youtube.com");
 					else
 						test = "www.youtube.com";
-
 				}
 				if (randy == 3) {
 					if (test.length() > 0)
