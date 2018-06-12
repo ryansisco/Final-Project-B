@@ -23,35 +23,35 @@ public class UrlValidatorTest {
 //
    @Test(timeout = 4000)
    public void Manual_Test01() throws Throwable//Tests known websites 
-   {
-		// UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-		 UrlValidator urlVal2 = new UrlValidator();
-		 // assertTrue(urlVal.isValid("http://www.youtube.com"));
-		 // assertTrue(urlVal.isValid("http://www.reddit.com"));
-		 // assertTrue(urlVal.isValid("http://www.spotify.com"));
-		 // assertTrue(urlVal.isValid("http://www.google.com"));
-		 // assertTrue(urlVal.isValid("http://www.amazon.com"));
-		 // assertTrue(urlVal.isValid("http://www.ebay.com"));
-		 assertTrue(urlVal2.isValid("http://www.youtube.com"));
-		 assertTrue(urlVal2.isValid("http://www.reddit.com"));
-		 assertTrue(urlVal2.isValid("http://www.spotify.com"));
-		 assertTrue(urlVal2.isValid("http://www.google.com"));
-		 assertTrue(urlVal2.isValid("http://www.amazon.com"));
-		 assertTrue(urlVal2.isValid("http://www.ebay.com"));
+   {   
+      UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+      UrlValidator urlVal2 = new UrlValidator(); //should cause false returns on isValid
+      assertTrue(urlVal.isValid("http://www.youtube.com"));
+      assertTrue(urlVal.isValid("http://www.reddit.com:65535"));
+      assertTrue(urlVal.isValid("ftp://www.spotify.com"));
+      assertTrue(urlVal.isValid("http://www.google.com/$23"));
+      assertTrue(urlVal.isValid("http://www.amazon.com?action=view"));
+      assertTrue(urlVal.isValid("10.10.10.10"));
+      assertFalse(urlVal2.isValid("http://www.youtube.com"));
+      assertFalse(urlVal2.isValid("http://www.reddit.com"));
+      assertFalse(urlVal2.isValid("http://www.spotify.com"));
+      assertFalse(urlVal2.isValid("http://www.google.com"));
+      assertFalse(urlVal2.isValid("http://www.amazon.com"));
+      assertFalse(urlVal2.isValid("http://www.ebay.com"));
    }
 
    @Test(timeout = 4000)
    public void Manual_Test02() throws Throwable//Tests known websites
-   {    
-		 UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-		 UrlValidator urlVal2 = new UrlValidator(); //should cause false returns on isValid
-		 assertFalse(urlVal.isValid("http://www.342345453eb3ay1236456456452"));
-		 assertFalse(urlVal.isValid("http://www.youtube1321354313123.com"));
-		 assertFalse(urlVal.isValid("http://www.reddit12312312324.com"));
-		 assertFalse(urlVal2.isValid("http://www.spotify56456.com"));
-		 assertFalse(urlVal2.isValid("http://www.google.com"));
-		 assertFalse(urlVal2.isValid("http://www.amazon.com"));
-		 assertFalse(urlVal2.isValid("http://www.ebay.com"));
+   {     
+      UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+      UrlValidator urlVal2 = new UrlValidator(); //should cause false returns on isValid
+      assertFalse(urlVal.isValid("345453eb3ay1236456456452"));
+      assertFalse(urlVal.isValid("://h.youtube1321354313123.com"));
+      assertFalse(urlVal.isValid("6.6.6.6.6.6.6"));
+      assertFalse(urlVal2.isValid("http://.spotify56456."));
+      assertFalse(urlVal.isValid("http://www.google.com/..//file"));
+      assertFalse(urlVal2.isValid("http://www.amazon.com"));
+      assertFalse(urlVal2.isValid("http://www.ebay.com"));
    }
    
 //
