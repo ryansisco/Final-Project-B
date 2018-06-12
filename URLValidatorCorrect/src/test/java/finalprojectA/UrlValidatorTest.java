@@ -16,11 +16,15 @@ import java.util.Random;
 public class UrlValidatorTest {
 
 	@Test
-	public void Test01_Manual_Testing() throws Throwable//Tests known websites 
+	public void Test01_Manual_Testing() throws Throwable   //Tests known websites 
 	{  
 		System.out.print("\nTesting websites known to exist\n");
-		UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-		UrlValidator urlVal2 = new UrlValidator();
+		UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);	//testing constructor
+		UrlValidator urlVal2 = new UrlValidator();	//testing constructor
+		long digit = 22222222;
+		RegexValidator val = null;
+		UrlValidator urlVal3 = new UrlValidator(0);	//testing constructor
+		UrlValidator urlVal4 = new UrlValidator(val, 0);	//testing constructor
 		assertTrue(urlVal.isValid("http://www.youtube.com"));
 		assertTrue(urlVal.isValid("http://www.reddit.com:65535"));
 		assertTrue(urlVal.isValid("ftp://www.spotify.com"));
@@ -37,11 +41,14 @@ public class UrlValidatorTest {
 	}
 
 	@Test
-	public void Test02_Manual_Testing() throws Throwable//Tests websites that don't exist
+	public void Test02_Manual_Testing() throws Throwable   //Tests websites that don't exist
 	{     
 		System.out.print("\nTesting websites known to NOT exist\n");
-		UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-		UrlValidator urlVal2 = new UrlValidator();
+		UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);	//testing constructor
+		UrlValidator urlVal2 = new UrlValidator();	//testing constructor
+		assertFalse(urlVal.isValid(null));
+		assertFalse(urlVal.isValid("youtube.com/http/.39org"));
+		assertFalse(urlVal.isValid("//localfiletest32432424.org"));
 		assertFalse(urlVal.isValid("345453eb3ay1236456456452"));
 		assertFalse(urlVal.isValid("://h.youtube1321354313123.com"));
 		assertFalse(urlVal.isValid("6.6.6.6.6.6.6"));
@@ -52,82 +59,81 @@ public class UrlValidatorTest {
 
 //
 	@Test
-	public void Test03_Partition_Test() throws Throwable
+	public void Test03_Partition_Test() throws Throwable   //tests protocol
 	{	   
 		System.out.print("\nTesting string with improper protocol\n");
-		UrlValidator urlVal = new UrlValidator();
+		UrlValidator urlVal = new UrlValidator();	//testing constructor
 		String precomp = "://www.google.com";
 		Random rand = new Random();
-		for (int i = 0; i < 100000; i++) {
-			String protocol = "";
-			int pass = 0;
-			for (int j = 0; j < (rand.nextInt(8) + 1); j++) {
-				char randchar = (char)(rand.nextInt(97) + 1);
+		for (int i = 0; i < 100000; i++) {	//long loop
+			String protocol = "";	//clears buffer
+			int pass = 0;	//clears buffer
+			for (int j = 0; j < (rand.nextInt(8) + 1); j++) {	//gets size of protocol
+				char randchar = (char)(rand.nextInt(97) + 1);	//generates protocol
 				protocol = protocol.concat(String.valueOf(randchar));
 			}
-			if ((protocol.equals("http")) || (protocol.equals("ftp"))
+			if ((protocol.equals("http")) || (protocol.equals("ftp"))	//if protocol is valid
 				|| (protocol.equals("h3t")) || (protocol.equals("https"))){
 				pass = 1;
 			}
 			protocol = protocol.concat(precomp);
 			if (pass == 1)
-				assertTrue(urlVal.isValid(protocol));
+				assertTrue(urlVal.isValid(protocol));	//should be true
 			else
-				assertFalse(urlVal.isValid(protocol));  
+				assertFalse(urlVal.isValid(protocol));  //should be false
 		}
 	}
 
 	@Test
-	public void Test04_Partition_Test() throws Throwable
+	public void Test04_Partition_Test() throws Throwable   //tests top-level domain
 	{	   
 		System.out.print("\nTesting string with improper top-level domain\n");
-		UrlValidator urlVal = new UrlValidator();
+		UrlValidator urlVal = new UrlValidator();	//testing constructor
 		Random rand = new Random();
-		for (int i = 0; i < 100000; i++) {
-			String protocol = "";
-			String precomp = "http://www.google.";
+		for (int i = 0; i < 100000; i++) {	//long loop
+			String protocol = "";	//clears buffer
+			String precomp = "http://www.google.";	//clears buffer
 			int pass = 0;
-			for (int j = 0; j < (rand.nextInt(3) + 3); j++) {
+			for (int j = 0; j < (rand.nextInt(3) + 3); j++) {	//small buffer for top-level domain
 				char randchar = (char)(rand.nextInt(97) + 1);
-				protocol = protocol.concat(String.valueOf(randchar));
+				protocol = protocol.concat(String.valueOf(randchar));	//generates tl domain
 			}
-			if ((protocol.equals("com")) || (protocol.equals("org"))
+			if ((protocol.equals("com")) || (protocol.equals("org"))	//known valid input
 				|| protocol.equals("net")) {
 				pass = 1;
 			}
 			precomp = precomp.concat(protocol);
 			if (pass == 1)
-				assertTrue(urlVal.isValid(protocol));
+				assertTrue(urlVal.isValid(protocol));	//should be true
 			else
-				assertFalse(urlVal.isValid(protocol));  
+				assertFalse(urlVal.isValid(protocol));  //should be false
 		}
 	}
 
 	@Test
-	public void Test05_Programming_Test() throws Throwable
+	public void Test05_Programming_Test() throws Throwable   //tests generated URLs
 	{
 		System.out.print("\nTesting random combination of web URLs\n");
-		UrlValidator urlVal = new UrlValidator();
+		UrlValidator urlVal = new UrlValidator();	//testing constructor
 		Random rand = new Random();
-		for (int i = 0; i < 300000; i++) {
-
+		for (int i = 0; i < 300000; i++) {	//long loop
 			String test = "";
 			int pass;
 			int randy = rand.nextInt(4) + 1;
 			pass = 1;
-			if ((randy == 1) || (randy == 2)) {
+			if ((randy == 1) || (randy == 2)) {	//sets http
 				test = "http://";
 			}
-			if (randy == 3) {
+			if (randy == 3) {	//sets empty
 				test = "";
 				pass = 0;
 			}
-			if (randy == 4) {
+			if (randy == 4) {	//sets error
 				test = "FAIL";
 				pass = 0;
 			}
 			randy = rand.nextInt(10) + 1;
-			if (randy < 8) {  //valid
+			if (randy < 8) {  //valid, gives known domain name
 				if (randy == 1) {
 					if (test.length() > 0)
 						test = test.concat("www.google.com");
@@ -174,15 +180,15 @@ public class UrlValidatorTest {
 			} 
 			else {   //invalid
 				pass = 0;
-				for (int j = 0; j < randy*2; j++) {
+				for (int j = 0; j < randy*2; j++) {	//adds random to domain
 					test = test.concat(Integer.toString(rand.nextInt(79) + 47));
 				}
 			}
-			if (pass == 1) {
-				assertTrue(urlVal.isValid(test));
+			if (pass == 1) {	
+				assertTrue(urlVal.isValid(test));	//should be true
 			}
 			if (pass == 0) {
-				assertFalse(urlVal.isValid(test));
+				assertFalse(urlVal.isValid(test));	//should be false
 			}
 		}
 	}
