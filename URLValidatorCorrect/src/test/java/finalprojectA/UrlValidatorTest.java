@@ -25,11 +25,11 @@ public class UrlValidatorTest {
 		assertTrue(urlVal.isValid("http://www.reddit.com:65535"));
 		assertTrue(urlVal.isValid("ftp://www.spotify.com"));
 		assertTrue(urlVal.isValid("http://www.google.com/$23"));
-		assertTrue(urlVal.isValid("http://www.amazon.com?action=view"));
+		assertTrue(urlVal.isValid("https://www.amazon.com?action=view"));
 		assertTrue(urlVal2.isValid("http://www.youtube.com"));
 		assertTrue(urlVal2.isValid("http://www.reddit.com"));
 		assertTrue(urlVal2.isValid("http://www.spotify.com"));
-		assertTrue(urlVal2.isValid("http://www.google.com"));
+		assertTrue(urlVal2.isValid("https://www.google.com"));
 		assertTrue(urlVal2.isValid("http://www.amazon.com"));
 		assertTrue(urlVal2.isValid("http://www.ebay.com"));
 		assertTrue(urlVal2.isValid("http://www.amazon.com"));
@@ -56,9 +56,9 @@ public class UrlValidatorTest {
 	{	   
 		System.out.print("\nTesting string with improper protocol\n");
 		UrlValidator urlVal = new UrlValidator();
-		String tail = "://www.google.com";
+		String precomp = "://www.google.com";
 		Random rand = new Random();
-		for (int i = 0; i < 1000000; i++) {
+		for (int i = 0; i < 100000; i++) {
 			String protocol = "";
 			int pass = 0;
 			for (int j = 0; j < (rand.nextInt(8) + 1); j++) {
@@ -66,10 +66,10 @@ public class UrlValidatorTest {
 				protocol = protocol.concat(String.valueOf(randchar));
 			}
 			if ((protocol.equals("http")) || (protocol.equals("ftp"))
-				|| protocol.equals("h3t")) {
+				|| (protocol.equals("h3t")) || (protocol.equals("https"))){
 				pass = 1;
 			}
-			protocol = protocol.concat(tail);
+			protocol = protocol.concat(precomp);
 			if (pass == 1)
 				assertTrue(urlVal.isValid(protocol));
 			else
@@ -80,21 +80,31 @@ public class UrlValidatorTest {
 	@Test
 	public void Test04_Partition_Test() throws Throwable
 	{	   
-		System.out.print("\nTesting string with improper domain\n");
-		UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-		UrlValidator urlVal2 = new UrlValidator();
-	}
-
-	@Test
-	public void Test05_Partition_Test() throws Throwable
-	{	   
 		System.out.print("\nTesting string with improper top-level domain\n");
-		UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-		UrlValidator urlVal2 = new UrlValidator();
+		UrlValidator urlVal = new UrlValidator();
+		Random rand = new Random();
+		for (int i = 0; i < 100000; i++) {
+			String protocol = "";
+			String precomp = "http://www.google.";
+			int pass = 0;
+			for (int j = 0; j < (rand.nextInt(3) + 3); j++) {
+				char randchar = (char)(rand.nextInt(97) + 1);
+				protocol = protocol.concat(String.valueOf(randchar));
+			}
+			if ((protocol.equals("com")) || (protocol.equals("org"))
+				|| protocol.equals("net")) {
+				pass = 1;
+			}
+			precomp = precomp.concat(protocol);
+			if (pass == 1)
+				assertTrue(urlVal.isValid(protocol));
+			else
+				assertFalse(urlVal.isValid(protocol));  
+		}
 	}
 
 	@Test
-	public void Test06_Programming_Test() throws Throwable
+	public void Test05_Programming_Test() throws Throwable
 	{
 		System.out.print("\nTesting random combination of web URLs\n");
 		UrlValidator urlVal = new UrlValidator();
